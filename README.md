@@ -1,33 +1,22 @@
 # Spam Message Detector
 
-This is a simple machine learning web app that detects whether a given message is spam or not.
+This project is a web application that uses a machine learning model to detect whether a given message is spam or not.
 
-## How it works
+## Live Demo
+[Click here to try the app](https://share.streamlit.io/your-link-here)
 
-- The message is passed through a trained ML model.
-- It uses a vectorizer and a classification algorithm.
-- The model predicts whether the message is spam or not spam.
+## How It Works
+- The model was trained on a dataset of SMS messages.
+- It uses a TF-IDF Vectorizer and a Naive Bayes classifier.
+- The frontend is built with Streamlit.
 
-## Technologies Used
+## Files in this Repo
+- `app.py` – Streamlit web app code.
+- `spam_model.pkl` – Trained ML model.
+- `vectorizer.pkl` – Text vectorizer used for preprocessing.
+- `requirements.txt` – List of libraries needed to run the app.
 
-- Python
-- Scikit-learn
-- Streamlit
-- Pickle (for saving the model and vectorizer)
-
-## How to Use
-
-1. Type your message in the input box.
-2. Click on "Check if it's spam".
-3. The app will show whether the message is spam or not.
-
-## Demo
-
-Try the app here:  
-[Spam Message Detector App](https://spamdetector-svdtjij3qxsv974pxw8rtsg.streamlit.app)
-
-## Files in this project
-
-- `app.py` – Main Streamlit app
-- `spam_model.pkl` – Trained ML model
-- `vectorizer.pkl` – TF-IDF vectorizer
+## Running Locally
+```bash
+pip install -r requirements.txt
+streamlit run app.py
