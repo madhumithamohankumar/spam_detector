@@ -1,26 +1,24 @@
-from flask import Flask, render_template, request
-import pickle
+import streamlit as st
 import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
+import joblib
+from sklearn.feature_extraction.text import CountVectorizer
 
-app = Flask(__name__)
+# Load the trained model and vectorizer
+model = joblib.load("spam_model.pkl")
+vectorizer = joblib.load("vectorizer.pkl")
 
-# Load the model and vectorizer
-model = pickle.load(open('model.pkl', 'rb'))
-vectorizer = pickle.load(open('vectorizer.pkl', 'rb'))
+st.title("Spam Message Detector")
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+user_input = st.text_area("Enter your message:")
 
-@app.route('/predict', methods=['POST'])
-def predict():
-    message = request.form['message']
-    data = [message]
-    vect = vectorizer.transform(data)
-    prediction = model.predict(vect)
-    result = "SPAM" if prediction[0] == 1 else "NOT SPAM"
-    return render_template('index.html', prediction_text=result)
+if st.button("Check if it's spam"):
+    if user_input.strip() == "":
+        st.warning("Please enter a message.")
+    else:
+        input_vector = vectorizer.transform([user_input])
+        prediction = model.predict(input_vector)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+        if prediction[0] == 1:
+            st.error("This is a Spam message!")
+        else:
+            st.success("This is NOT a Spam message.")
